@@ -1,0 +1,65 @@
+# Default SECI Configuration
+# Adjust these parameters based on your compute budget and task
+
+model:
+  vocab_size: 32000
+  hidden_size: 256
+  num_layers: 4
+  num_heads: 4
+  intermediate_size: 1024
+  max_seq_length: 512
+  dropout: 0.1
+  
+  # Quantization (for memory efficiency)
+  use_quantization: false
+  quantization_bits: 8
+  
+  # LoRA (for parameter-efficient fine-tuning)
+  use_lora: false
+  lora_r: 8
+  lora_alpha: 16
+  lora_dropout: 0.1
+  lora_target_modules:
+    - q_proj
+    - v_proj
+
+memory:
+  memory_size: 1000
+  embedding_dim: 256
+  num_memory_heads: 4
+  memory_update_rate: 0.01
+  retrieval_top_k: 5
+  use_faiss: false
+
+distillation:
+  temperature: 2.0
+  alpha: 0.5
+  distill_loss_type: kl_div  # Options: kl_div, mse, cosine
+  layer_wise_distillation: true
+  hidden_distillation: true
+
+replay:
+  buffer_size: 10000
+  replay_batch_size: 32
+  replay_frequency: 5
+  sampling_strategy: reservoir  # Options: reservoir, priority, random
+  priority_alpha: 0.6
+
+training:
+  batch_size: 32
+  learning_rate: 0.0001
+  weight_decay: 0.01
+  max_steps: 10000
+  warmup_steps: 500
+  gradient_accumulation_steps: 1
+  max_grad_norm: 1.0
+  eval_steps: 500
+  save_steps: 1000
+  logging_steps: 100
+  seed: 42
+
+# System settings
+device: cuda
+mixed_precision: true
+output_dir: ./outputs
+experiment_name: seci_mvp

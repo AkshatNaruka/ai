@@ -1,0 +1,62 @@
+# Low-Resource Configuration
+# For training on limited compute (CPU or single small GPU)
+
+model:
+  vocab_size: 16000
+  hidden_size: 128
+  num_layers: 2
+  num_heads: 2
+  intermediate_size: 512
+  max_seq_length: 256
+  dropout: 0.1
+  
+  use_quantization: true
+  quantization_bits: 8
+  
+  use_lora: true
+  lora_r: 4
+  lora_alpha: 8
+  lora_dropout: 0.1
+  lora_target_modules:
+    - q_proj
+    - v_proj
+
+memory:
+  memory_size: 500
+  embedding_dim: 128
+  num_memory_heads: 2
+  memory_update_rate: 0.01
+  retrieval_top_k: 3
+  use_faiss: false
+
+distillation:
+  temperature: 2.0
+  alpha: 0.5
+  distill_loss_type: kl_div
+  layer_wise_distillation: false
+  hidden_distillation: true
+
+replay:
+  buffer_size: 5000
+  replay_batch_size: 16
+  replay_frequency: 10
+  sampling_strategy: reservoir
+  priority_alpha: 0.6
+
+training:
+  batch_size: 16
+  learning_rate: 0.0001
+  weight_decay: 0.01
+  max_steps: 5000
+  warmup_steps: 250
+  gradient_accumulation_steps: 2
+  max_grad_norm: 1.0
+  eval_steps: 250
+  save_steps: 500
+  logging_steps: 50
+  seed: 42
+
+device: cpu
+mixed_precision: false
+output_dir: ./outputs
+experiment_name: seci_low_resource
