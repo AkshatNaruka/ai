@@ -1,0 +1,34 @@
+```
+seci/
+├── seci/                      # Main package
+│   ├── __init__.py           # Package exports
+│   ├── core/                 # Core model components
+│   │   ├── __init__.py
+│   │   ├── model.py          # CompactTransformer (student model)
+│   │   └── teacher.py        # TeacherModel (knowledge source)
+│   ├── memory/               # External memory system
+│   │   ├── __init__.py
+│   │   └── external_memory.py # Attention-based memory
+│   ├── distillation/         # Knowledge distillation
+│   │   ├── __init__.py
+│   │   └── distiller.py      # KnowledgeDistiller
+│   ├── replay/               # Experience replay
+│   │   ├── __init__.py
+│   │   └── buffer.py         # ReplayBuffer
+│   ├── config/               # Configuration management
+│   │   ├── __init__.py
+│   │   └── config.py         # SECIConfig and sub-configs
+│   └── utils/                # Utility functions
+│       ├── __init__.py
+│       └── helpers.py        # Training utilities
+├── config/                   # Configuration files
+│   ├── default.yaml          # Default configuration
+│   └── low_resource.yaml     # Low-resource setup
+├── examples/                 # Example scripts
+├── docs/                     # Documentation
+├── train.py                  # Main training script
+├── requirements.txt          # Python dependencies
+├── setup.py                  # Package setup
+├── .gitignore               # Git ignore rules
+└── README.md                # Project documentation
+```
