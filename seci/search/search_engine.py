@@ -18,7 +18,7 @@ class SearchResult:
     url: str
     snippet: str
     source: str  # The search provider used
-    timestamp: datetime = field(default_factory=datetime.now)
+    timestamp: datetime = field(default_factory=lambda: datetime.now())
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:

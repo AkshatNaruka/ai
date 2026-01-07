@@ -30,7 +30,7 @@ class ScrapedContent:
     content: str
     markdown: str
     metadata: Dict[str, Any]
-    timestamp: datetime = field(default_factory=datetime.now)
+    timestamp: datetime = field(default_factory=lambda: datetime.now())
     success: bool = True
     error: Optional[str] = None
     

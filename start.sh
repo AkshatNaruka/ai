@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e  # Exit on any error
+
 # Quick start script for SECI Search API
 
 echo "=========================================="
@@ -14,7 +16,10 @@ fi
 
 # Activate virtual environment
 echo "Activating virtual environment..."
-source venv/bin/activate
+if ! source venv/bin/activate; then
+    echo "Error: Failed to activate virtual environment"
+    exit 1
+fi
 
 # Install dependencies
 echo "Installing dependencies..."
