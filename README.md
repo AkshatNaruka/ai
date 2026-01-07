@@ -1,6 +1,6 @@
-# SECI: Self-Evolving Compact Intelligence
+# SECI: Self-Evolving Compact Intelligence + Perplexity-like Search
 
-A modular PyTorch framework for efficient continual learning with compact transformers. SECI combines knowledge distillation, external memory, experience replay, and parameter-efficient training (LoRA, quantization) to enable self-evolving AI systems on limited compute.
+A modular PyTorch framework for efficient continual learning with compact transformers, **now enhanced with Perplexity-like web search capabilities**. SECI combines knowledge distillation, external memory, experience replay, and parameter-efficient training (LoRA, quantization) with intelligent web search, scraping, and conversational AI.
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-red.svg)](https://pytorch.org/)
@@ -8,6 +8,7 @@ A modular PyTorch framework for efficient continual learning with compact transf
 
 ## 🎯 Key Features
 
+### Core AI Features
 - **Compact Transformer Core**: Small, efficient transformer (256 hidden, 4 layers, ~8M params)
 - **External Memory**: Attention-based key-value memory for knowledge storage
 - **Knowledge Distillation**: Transfer learning from larger teacher models
@@ -16,15 +17,27 @@ A modular PyTorch framework for efficient continual learning with compact transf
 - **Continual Learning**: Designed to prevent catastrophic forgetting
 - **Modular Design**: Easy to extend, customize, and integrate
 
+### 🔍 NEW: Perplexity-like Search Features
+- **Web Search Integration**: Multi-provider support (DuckDuckGo, Google, Bing)
+- **Intelligent Web Scraping**: Extract and process content from search results
+- **Conversational Context**: Maintain conversation history across sessions
+- **Citation Tracking**: Provide sources for all information
+- **REST API**: FastAPI-based API server ready for deployment
+- **Fast & Scalable**: Built-in caching and async processing
+- **Production Ready**: Deploy on any VPS with comprehensive documentation
+
 ## 📋 Table of Contents
 
 - [Architecture](#architecture)
+- [Perplexity-like Search](#perplexity-like-search)
 - [Installation](#installation)
 - [Quick Start](#quick-start)
 - [Core Components](#core-components)
+- [Search & Web Features](#search--web-features)
 - [Configuration](#configuration)
 - [Training](#training)
 - [Advanced Usage](#advanced-usage)
+- [Deployment](#deployment)
 - [Documentation](#documentation)
 - [Examples](#examples)
 - [Contributing](#contributing)
@@ -63,6 +76,71 @@ A modular PyTorch framework for efficient continual learning with compact transf
 5. **ReplayBuffer**: Stores experiences for continual learning (10K samples)
 
 See [Architecture Documentation](docs/EXECUTION_FLOW.md) for detailed execution flow.
+
+## 🔍 Perplexity-like Search
+
+SECI now includes comprehensive web search capabilities similar to Perplexity AI:
+
+```
+┌────────────────────────────────────────────────────────┐
+│           SECI Search System (NEW!)                    │
+├────────────────────────────────────────────────────────┤
+│                                                        │
+│  User Query → [Query Processor]                       │
+│                       ↓                                │
+│              [Search Engine]                           │
+│                 ↓         ↓                            │
+│        [DuckDuckGo]  [Google]                         │
+│                 ↓                                      │
+│              Search Results                            │
+│                 ↓                                      │
+│              [Web Scraper]                            │
+│                 ↓                                      │
+│            Scraped Content                            │
+│                 ↓                                      │
+│         [Response Generator]                          │
+│                 ↓                                      │
+│    Response with Citations                            │
+│                 ↓                                      │
+│         [Context Manager]                             │
+│                                                        │
+└────────────────────────────────────────────────────────┘
+```
+
+### Quick Search Example
+
+```python
+from seci import SearchEngine, WebScraper, ContextManager, QueryProcessor
+from seci.search import DuckDuckGoProvider
+
+# Initialize components
+search_engine = SearchEngine()
+search_engine.add_provider(DuckDuckGoProvider())
+scraper = WebScraper()
+context = ContextManager()
+
+# Create processor
+processor = QueryProcessor(search_engine, scraper, context)
+
+# Process query
+result = processor.process("What is artificial intelligence?")
+print(result.response)
+print(result.citations)
+```
+
+### API Server
+
+```bash
+# Start API server
+python api.py
+
+# Make search request
+curl -X POST http://localhost:8000/search \
+  -H "Content-Type: application/json" \
+  -d '{"query": "What is machine learning?", "max_results": 5}'
+```
+
+See [Search System Documentation](docs/SEARCH_SYSTEM.md) for complete details.
 
 ## 📦 Installation
 
@@ -237,6 +315,120 @@ stats = buffer.get_stats()
 print(f"Buffer: {stats['current_size']}/{stats['buffer_size']}")
 ```
 
+## 🌐 Search & Web Features
+
+### 1. Web Search
+
+```python
+from seci.search import SearchEngine, DuckDuckGoProvider, GoogleSearchProvider
+
+# Initialize search engine
+engine = SearchEngine(max_results=10)
+engine.add_provider(DuckDuckGoProvider())  # No API key needed
+engine.add_provider(GoogleSearchProvider())  # Optional
+
+# Search the web
+results = engine.search("artificial intelligence", num_results=5)
+for result in results:
+    print(f"[{result.source}] {result.title}: {result.url}")
+```
+
+### 2. Web Scraping
+
+```python
+from seci.scraper import WebScraper
+
+# Initialize scraper
+scraper = WebScraper(timeout=10, max_content_length=50000)
+
+# Scrape a URL
+content = scraper.scrape("https://example.com")
+print(f"Title: {content.title}")
+print(f"Content: {content.content[:500]}...")
+print(f"Metadata: {content.metadata}")
+
+# Scrape multiple URLs
+urls = [result.url for result in results[:3]]
+contents = scraper.scrape_multiple(urls)
+```
+
+### 3. Conversational Context
+
+```python
+from seci.context import ContextManager
+
+# Initialize context manager
+manager = ContextManager(max_history=20)
+
+# Add messages to conversation
+manager.add_user_message("session-123", "What is AI?")
+manager.add_assistant_message("session-123", "AI is...")
+
+# Get conversation history
+history = manager.get_history("session-123")
+for msg in history:
+    print(f"{msg.role}: {msg.content}")
+
+# Export conversation
+json_data = manager.export_context("session-123")
+```
+
+### 4. Query Processing
+
+```python
+from seci.query_processor import QueryProcessor
+
+# Initialize processor with all components
+processor = QueryProcessor(
+    search_engine=engine,
+    web_scraper=scraper,
+    context_manager=manager,
+    max_sources=5,
+    scrape_top_n=3
+)
+
+# Process a query (search + scrape + generate response)
+result = processor.process(
+    query="What are the latest AI developments?",
+    session_id="user-123"
+)
+
+print(f"Response: {result.response}")
+print(f"Citations: {len(result.citations)}")
+for citation in result.citations:
+    print(f"  [{citation['number']}] {citation['title']}")
+```
+
+### 5. REST API Server
+
+```bash
+# Start the API server
+python api.py
+
+# Or with uvicorn for production
+uvicorn api:app --host 0.0.0.0 --port 8000 --workers 4
+```
+
+API Endpoints:
+- `POST /search` - Search and generate response
+- `GET /conversation/{session_id}` - Get conversation history
+- `DELETE /conversation/{session_id}` - Clear conversation
+- `GET /sessions` - List all sessions
+- `GET /health` - Health check
+
+Example API usage:
+```bash
+curl -X POST http://localhost:8000/search \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "What is machine learning?",
+    "session_id": "user-123",
+    "max_results": 5,
+    "scrape_content": true
+  }'
+```
+```
+
 ## ⚙️ Configuration
 
 SECI uses a hierarchical YAML-based configuration system.
@@ -405,10 +597,84 @@ print(f"Total accesses: {stats['total_accesses']}")
 print(f"Average age: {stats['avg_memory_age']:.1f}")
 ```
 
+## 🚀 Deployment
+
+### VPS Deployment
+
+Deploy SECI Search API on your VPS in minutes:
+
+```bash
+# 1. Clone repository
+git clone https://github.com/AkshatNaruka/ai.git
+cd ai
+
+# 2. Install dependencies
+pip install -r requirements.txt
+pip install -e .
+
+# 3. Run API server
+uvicorn api:app --host 0.0.0.0 --port 8000 --workers 4
+
+# 4. Configure Nginx (optional)
+# 5. Setup SSL with Let's Encrypt (optional)
+```
+
+### Systemd Service
+
+Create `/etc/systemd/system/seci-api.service`:
+
+```ini
+[Unit]
+Description=SECI Search API
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+WorkingDirectory=/opt/ai
+Environment="PATH=/opt/ai/venv/bin"
+ExecStart=/opt/ai/venv/bin/uvicorn api:app --host 0.0.0.0 --port 8000 --workers 4
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Enable and start:
+```bash
+sudo systemctl enable seci-api
+sudo systemctl start seci-api
+```
+
+### Docker Deployment (Optional)
+
+```dockerfile
+FROM python:3.10-slim
+
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+RUN pip install -e .
+
+EXPOSE 8000
+CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8000"]
+```
+
+Build and run:
+```bash
+docker build -t seci-search .
+docker run -p 8000:8000 seci-search
+```
+
+See [DEPLOYMENT.md](docs/DEPLOYMENT.md) for complete deployment guide.
+```
+
 ## 📚 Documentation
 
 Comprehensive documentation is available in the `docs/` directory:
 
+### Core Documentation
 - **[Repo Structure](docs/REPO_TREE.txt)**: Complete file tree
 - **[Module Responsibilities](docs/MODULE_RESPONSIBILITIES.md)**: What each module does
 - **[Execution Flow](docs/EXECUTION_FLOW.md)**: End-to-end training pipeline
@@ -416,17 +682,54 @@ Comprehensive documentation is available in the `docs/` directory:
 - **[Configuration Strategy](docs/CONFIG_STRATEGY.md)**: Configuration guide
 - **[MVP Metrics](docs/MVP_METRICS.md)**: Success criteria and benchmarks
 
+### Search System Documentation (NEW)
+- **[Search System Overview](docs/SEARCH_SYSTEM.md)**: Complete guide to search features
+- **[Deployment Guide](docs/DEPLOYMENT.md)**: VPS deployment instructions
+- **[API Reference](docs/SEARCH_SYSTEM.md#api-usage)**: REST API documentation
+
 ## 💡 Examples
 
 Example scripts demonstrate key features:
 
 ```bash
-# Coming soon
+# Core training examples
 examples/
-├── basic_training.py      # Simple training loop
-├── continual_learning.py  # Multi-task learning
-├── lora_finetuning.py    # Parameter-efficient fine-tuning
-└── custom_memory.py       # Memory system usage
+├── basic_training.py         # Simple training loop
+├── continual_learning.py     # Multi-task learning
+└── perplexity_search.py      # NEW: Web search example
+
+# Run Perplexity-like search example
+python examples/perplexity_search.py
+```
+
+### Quick Examples
+
+**Web Search:**
+```python
+from seci.search import SearchEngine, DuckDuckGoProvider
+
+engine = SearchEngine()
+engine.add_provider(DuckDuckGoProvider())
+results = engine.search("artificial intelligence")
+```
+
+**Full Query Processing:**
+```python
+from seci import QueryProcessor
+
+result = processor.process("What is machine learning?")
+print(result.response)
+```
+
+**API Client:**
+```python
+import requests
+
+response = requests.post(
+    "http://localhost:8000/search",
+    json={"query": "What is AI?"}
+)
+print(response.json()['response'])
 ```
 
 ## 🛠️ Development
