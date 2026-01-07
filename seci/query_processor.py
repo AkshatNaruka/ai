@@ -24,7 +24,7 @@ class ProcessedQuery:
     scraped_content: List[ScrapedContent] = field(default_factory=list)
     response: str = ""
     citations: List[Dict[str, str]] = field(default_factory=list)
-    timestamp: datetime = field(default_factory=datetime.now)
+    timestamp: datetime = field(default_factory=lambda: datetime.now())
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:

@@ -3,7 +3,7 @@ Main search engine interface for querying multiple providers.
 """
 
 from typing import List, Dict, Optional, Any
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 import logging
 

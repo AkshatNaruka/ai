@@ -9,6 +9,7 @@ from pydantic import BaseModel, Field
 from typing import List, Dict, Any, Optional
 import logging
 import uuid
+import os
 from datetime import datetime
 
 from seci.search import SearchEngine, DuckDuckGoProvider, GoogleSearchProvider
@@ -30,10 +31,15 @@ app = FastAPI(
     version="0.1.0",
 )
 
+# Get allowed origins from environment variable or use default for development
+ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "*").split(",")
+if ALLOWED_ORIGINS == ["*"]:
+    logger.warning("CORS configured with allow_origins=['*']. Configure ALLOWED_ORIGINS env var for production!")
+
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # TODO: Configure for production - use specific domains or env var
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
