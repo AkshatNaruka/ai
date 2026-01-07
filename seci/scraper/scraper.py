@@ -3,7 +3,7 @@ Web scraper for extracting content from URLs.
 """
 
 from typing import Optional, Dict, Any, List
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 import logging
 import requests
@@ -12,6 +12,13 @@ import html2text
 from urllib.parse import urlparse
 
 logger = logging.getLogger(__name__)
+
+
+# CSS selectors for elements to remove during content extraction
+ELEMENTS_TO_REMOVE = ["script", "style", "nav", "footer", "header"]
+
+# CSS selectors for finding main content
+MAIN_CONTENT_SELECTORS = ["article", "main", '[role="main"]', ".content", "#content"]
 
 
 @dataclass
@@ -23,13 +30,9 @@ class ScrapedContent:
     content: str
     markdown: str
     metadata: Dict[str, Any]
-    timestamp: datetime = None
+    timestamp: datetime = field(default_factory=datetime.now)
     success: bool = True
     error: Optional[str] = None
-    
-    def __post_init__(self):
-        if self.timestamp is None:
-            self.timestamp = datetime.now()
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary format."""
@@ -189,12 +192,12 @@ class WebScraper:
     def _extract_content(self, soup: BeautifulSoup) -> str:
         """Extract main content from page."""
         # Remove script and style elements
-        for script in soup(["script", "style", "nav", "footer", "header"]):
+        for script in soup(ELEMENTS_TO_REMOVE):
             script.decompose()
         
         # Try to find main content areas
         main_content = None
-        for selector in ["article", "main", '[role="main"]', ".content", "#content"]:
+        for selector in MAIN_CONTENT_SELECTORS:
             main_content = soup.select_one(selector)
             if main_content:
                 break

@@ -17,7 +17,7 @@ class Message:
     
     role: str  # 'user' or 'assistant'
     content: str
-    timestamp: datetime = field(default_factory=datetime.now)
+    timestamp: datetime = field(default_factory=lambda: datetime.now())
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
@@ -37,8 +37,8 @@ class ConversationContext:
     session_id: str
     messages: List[Message] = field(default_factory=list)
     metadata: Dict[str, Any] = field(default_factory=dict)
-    created_at: datetime = field(default_factory=datetime.now)
-    updated_at: datetime = field(default_factory=datetime.now)
+    created_at: datetime = field(default_factory=lambda: datetime.now())
+    updated_at: datetime = field(default_factory=lambda: datetime.now())
     
     def add_message(self, role: str, content: str, metadata: Optional[Dict] = None) -> None:
         """Add a message to the conversation."""

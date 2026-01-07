@@ -18,14 +18,8 @@ class SearchResult:
     url: str
     snippet: str
     source: str  # The search provider used
-    timestamp: datetime = None
-    metadata: Dict[str, Any] = None
-    
-    def __post_init__(self):
-        if self.timestamp is None:
-            self.timestamp = datetime.now()
-        if self.metadata is None:
-            self.metadata = {}
+    timestamp: datetime = field(default_factory=datetime.now)
+    metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary format."""
