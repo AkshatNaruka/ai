@@ -3,7 +3,7 @@ Result ranking and relevance scoring utilities.
 Implements intelligent ranking of search results and scraped content.
 """
 
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Tuple, Any
 from dataclasses import dataclass
 import logging
 import re
@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 @dataclass
 class RankedResult:
     """Search result with relevance score."""
-    result: any
+    result: Any
     score: float
     ranking_factors: Dict[str, float]
 
@@ -60,7 +60,7 @@ class ResultRanker:
     
     def rank_results(
         self,
-        results: List[any],
+        results: List[Any],
         query: str,
         keywords: Optional[List[str]] = None
     ) -> List[RankedResult]:
@@ -100,10 +100,10 @@ class ResultRanker:
     
     def _score_result(
         self,
-        result: any,
+        result: Any,
         query: str,
         keywords: List[str]
-    ) -> tuple[float, Dict[str, float]]:
+    ) -> Tuple[float, Dict[str, float]]:
         """
         Calculate relevance score for a result.
         
@@ -271,7 +271,7 @@ class ResultRanker:
         ranked_results: List[RankedResult],
         top_n: int = 5,
         min_score: float = 0.3
-    ) -> List[any]:
+    ) -> List[Any]:
         """
         Get top N results with minimum score threshold.
         
