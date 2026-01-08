@@ -146,7 +146,7 @@ class QueryEnhancer:
         
         return query
     
-    def analyze_query_intent(self, query: str) -> Dict[str, any]:
+    def analyze_query_intent(self, query: str) -> Dict[str, Any]:
         """
         Analyze query to determine intent and characteristics.
         

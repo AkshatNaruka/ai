@@ -249,7 +249,7 @@ class IntelligentCache:
     
     def _hash_key(self, key: str) -> str:
         """
-        Generate hash for cache key.
+        Generate hash for cache key using SHA256 for better security.
         
         Args:
             key: Original key
@@ -257,7 +257,7 @@ class IntelligentCache:
         Returns:
             Hash string
         """
-        return hashlib.md5(key.encode()).hexdigest()
+        return hashlib.sha256(key.encode()).hexdigest()
     
     def _remove(self, cache_key: str) -> bool:
         """

@@ -34,7 +34,9 @@ app = FastAPI(
 # Get allowed origins from environment variable
 ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "*").split(",")
 if ALLOWED_ORIGINS == ["*"]:
-    logger.warning("CORS configured with allow_origins=['*']. Configure ALLOWED_ORIGINS env var for production!")
+    if os.getenv("ENV", "development") == "production":
+        raise RuntimeError("CORS allow_origins=['*'] is not allowed in production! Set ALLOWED_ORIGINS environment variable.")
+    logger.warning("CORS configured with allow_origins=['*']. This is only for development! Configure ALLOWED_ORIGINS env var for production.")
 
 # Add CORS middleware
 app.add_middleware(
