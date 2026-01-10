@@ -1,0 +1,25 @@
+# Minimal requirements for low-resource devices
+# This provides core functionality without heavy dependencies
+
+# Core Python packages
+numpy>=1.24.0
+pyyaml>=6.0
+tqdm>=4.65.0
+
+# Web search and scraping (lightweight)
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+lxml>=4.9.0
+
+# API server (lightweight)
+fastapi>=0.104.0
+uvicorn>=0.24.0
+pydantic>=2.0.0
+
+# Search engines
+duckduckgo-search>=3.9.0
+
+# Optional: Only install if not on limited resources
+# torch>=2.0.0  # Removed for minimal install
+# transformers>=4.35.0  # Removed for minimal install
+# peft>=0.7.0  # Removed for minimal install
