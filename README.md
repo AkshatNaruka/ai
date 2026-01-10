@@ -1,12 +1,46 @@
 # SECI: Self-Evolving Compact Intelligence + Enhanced Search
 
+**🚀 Your Personal AI Assistant - Install Anywhere, Run Everywhere**
+
 A modular PyTorch framework for efficient continual learning with compact transformers, **now enhanced with Perplexity-like web search capabilities** and **advanced smarter, better, faster features**. SECI combines knowledge distillation, external memory, experience replay, and parameter-efficient training (LoRA, quantization) with intelligent web search, scraping, conversational AI, and cutting-edge enhancements.
+
+**✨ NEW: Jarvis-like Portable Driver System** - Install on any device (Linux, macOS, Windows, Raspberry Pi, Android) with a single command and start using it immediately with natural language commands!
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-red.svg)](https://pytorch.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+## 🎯 Quick Install (Any Platform)
+
+```bash
+git clone https://github.com/AkshatNaruka/ai.git
+cd ai
+python install.py  # That's it!
+```
+
+Then use it:
+```bash
+# Interactive mode (like talking to Jarvis)
+python jarvis.py --interactive
+
+# Ask questions
+python jarvis.py ask "What is machine learning?"
+
+# Search the web
+python jarvis.py search "latest AI news"
+```
+
+**[See Quick Start Guide →](QUICKSTART.md)**
+
 ## 🎯 Key Features
+
+### 🤖 Jarvis-like Portable System (NEW!)
+- **Install Anywhere**: One command installation on Linux, macOS, Windows, Raspberry Pi, Android
+- **Natural Language Interface**: Simple CLI that understands your questions
+- **Auto-Configuration**: Detects your platform and optimizes automatically
+- **Minimal Mode**: Lightweight version for IoT, mobile, and resource-constrained devices
+- **Service Mode**: Run as a background service (systemd, launchd, Windows service)
+- **Zero Hassle**: Just install and start asking questions - like having Jarvis from Ironman!
 
 ### Core AI Features
 - **Compact Transformer Core**: Small, efficient transformer (256 hidden, 4 layers, ~8M params)
@@ -49,6 +83,9 @@ A modular PyTorch framework for efficient continual learning with compact transf
 
 ## 📋 Table of Contents
 
+- [Quick Install](#-quick-install-any-platform)
+- [Jarvis CLI](#-using-jarvis-cli)
+- [Supported Platforms](#-supported-platforms)
 - [Architecture](#architecture)
 - [Enhanced Features](#enhanced-features)
 - [Perplexity-like Search](#perplexity-like-search)
@@ -65,6 +102,69 @@ A modular PyTorch framework for efficient continual learning with compact transf
 - [Examples](#examples)
 - [Contributing](#contributing)
 - [Citation](#citation)
+
+## 🤖 Using Jarvis CLI
+
+After installation, interact with your AI assistant naturally:
+
+### Interactive Mode (Recommended)
+```bash
+python jarvis.py --interactive
+
+You: ask What is artificial intelligence?
+JARVIS: [provides detailed answer with sources]
+
+You: search latest AI developments
+JARVIS: [shows search results]
+
+You: exit
+```
+
+### Command Mode
+```bash
+# Ask any question
+python jarvis.py ask "How does quantum computing work?"
+
+# Search the web
+python jarvis.py search "Python tutorials"
+
+# Check system status
+python jarvis.py status
+
+# Start API server
+python jarvis.py serve
+```
+
+### Run as Background Service
+```bash
+# Linux (systemd)
+sudo cp systemd/jarvis.service /etc/systemd/system/
+sudo systemctl enable jarvis
+sudo systemctl start jarvis
+
+# Now accessible at http://localhost:8000
+```
+
+## 🌍 Supported Platforms
+
+SECI (Jarvis) works on:
+
+| Platform | Status | Installation |
+|----------|--------|--------------|
+| 🐧 Linux (Ubuntu, Debian, Fedora, Arch) | ✅ Full Support | `python install.py` |
+| 🍎 macOS | ✅ Full Support | `python install.py` |
+| 🪟 Windows 10/11 | ✅ Full Support | `python install.py` |
+| 🥧 Raspberry Pi (ARM) | ✅ Supported | `python install.py --minimal` |
+| 📱 Android (Termux) | ✅ Supported | `python install.py --minimal` |
+| 🐳 Docker | ✅ Full Support | `docker build -t jarvis .` |
+| ☁️ Cloud (AWS, GCP, Azure) | ✅ Full Support | See [deployment docs](docs/DEPLOYMENT.md) |
+
+**Minimum Requirements:**
+- Python 3.8+
+- 1GB RAM (minimal mode) / 2GB RAM (standard)
+- 1GB disk space
+
+**See platform-specific guides:** [Platform Installation Guide](docs/platforms/INSTALLATION.md)
 
 ## 🚀 Enhanced Features
 
