@@ -846,20 +846,33 @@ See [DEPLOYMENT.md](docs/DEPLOYMENT.md) for complete deployment guide.
 
 ## 📚 Documentation
 
-Comprehensive documentation is available in the `docs/` directory:
+Comprehensive documentation is available in the `docs/` directory. **[View Complete Documentation Index →](docs/INDEX.md)**
 
-### Core Documentation
-- **[Repo Structure](docs/REPO_TREE.txt)**: Complete file tree
-- **[Module Responsibilities](docs/MODULE_RESPONSIBILITIES.md)**: What each module does
-- **[Execution Flow](docs/EXECUTION_FLOW.md)**: End-to-end training pipeline
-- **[Core Interfaces](docs/CORE_INTERFACES.md)**: API reference for all components
-- **[Configuration Strategy](docs/CONFIG_STRATEGY.md)**: Configuration guide
-- **[MVP Metrics](docs/MVP_METRICS.md)**: Success criteria and benchmarks
+### 🎯 Start Here
+- **[Getting Started Guide](docs/GETTING_STARTED.md)** - Your first steps with SECI
+- **[Quick Start](QUICKSTART.md)** - 5-minute installation guide
+- **[User Guide](docs/USER_GUIDE.md)** - Complete usage guide
+- **[FAQ](docs/FAQ.md)** - Frequently asked questions
+- **[Troubleshooting](docs/TROUBLESHOOTING.md)** - Common issues and solutions
 
-### Search System Documentation (NEW)
-- **[Search System Overview](docs/SEARCH_SYSTEM.md)**: Complete guide to search features
-- **[Deployment Guide](docs/DEPLOYMENT.md)**: VPS deployment instructions
-- **[API Reference](docs/SEARCH_SYSTEM.md#api-usage)**: REST API documentation
+### 📖 For Developers
+- **[Developer Guide](docs/DEVELOPER_GUIDE.md)** - Development setup and guidelines
+- **[Architecture Guide](docs/ARCHITECTURE.md)** - System architecture in depth
+- **[Workflow Guide](docs/WORKFLOW.md)** - How SECI processes requests
+- **[Contributing](docs/CONTRIBUTING.md)** - How to contribute code
+- **[Roadmap](docs/ROADMAP.md)** - Future plans and enhancements
+
+### 🔧 Technical Documentation
+- **[Module Responsibilities](docs/MODULE_RESPONSIBILITIES.md)** - What each module does
+- **[Execution Flow](docs/EXECUTION_FLOW.md)** - Training pipeline details
+- **[Core Interfaces](docs/CORE_INTERFACES.md)** - Component APIs
+- **[API Reference](docs/API_REFERENCE.md)** - REST API documentation
+- **[Configuration Strategy](docs/CONFIG_STRATEGY.md)** - Configuration system
+
+### 🔍 Search & Web Features
+- **[Search System](docs/SEARCH_SYSTEM.md)** - Web search capabilities
+- **[Enhanced Features](docs/ENHANCED_FEATURES.md)** - Advanced features
+- **[Deployment Guide](docs/DEPLOYMENT.md)** - Deploying SECI
 
 ## 💡 Examples
 
@@ -928,13 +941,39 @@ flake8 seci/
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please:
+Contributions are welcome! We value all types of contributions:
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+**Ways to Contribute**:
+- 🐛 Report bugs and issues
+- 💡 Suggest new features
+- 📝 Improve documentation
+- 🔧 Submit code contributions
+- 🧪 Add tests and examples
+- 🌐 Help with translations
+
+**Getting Started**:
+1. Read the **[Contributing Guide](docs/CONTRIBUTING.md)**
+2. Check the **[Roadmap](docs/ROADMAP.md)** for planned features
+3. Join discussions on GitHub
+4. Pick an issue or suggest a feature
+5. Submit your contribution!
+
+**Development Setup**:
+```bash
+# Fork and clone
+git clone https://github.com/YOUR-USERNAME/ai.git
+cd ai
+
+# Install in development mode
+pip install -e .
+pip install pytest black isort flake8
+
+# Make changes and test
+pytest
+black seci/
+```
+
+See **[Developer Guide](docs/DEVELOPER_GUIDE.md)** for detailed instructions.
 
 ## 📄 License
 
